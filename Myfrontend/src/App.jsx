@@ -1,27 +1,17 @@
-import { useEffect, useState } from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Signup from './week6/signup';
+import Navigation from './week6/navigation';
+import Index from './week6/index';
 
 function App() {
-  const [tasks, setTasks] = useState([]);
-
-  useEffect(() => {
-    // Fetching data from the .NET backend
-    fetch('http://localhost:5226/api/tasks')
-      .then(res => res.json())
-      .then(data => setTasks(data))
-      .catch(err => console.error("Backend not running?", err));
-  }, []);
-
   return (
-    <div style={{ padding: '20px', fontFamily: 'sans-serif' }}>
-      <h1>My Tasks</h1>
-      <ul>
-        {tasks.map(task => (
-          <li key={task.id}>
-            {task.title} {task.isCompleted ? '✅' : '⏳'}
-          </li>
-        ))}
-      </ul>
-    </div>
+    <BrowserRouter>
+      <Navigation />
+      <Routes>
+  <Route path="/" element={<Index />} />
+  <Route path="/signup" element={<Signup />} />
+</Routes>
+    </BrowserRouter>
   );
 }
 
